@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+go env
+
 ##########
 VERSION=${1}
 
