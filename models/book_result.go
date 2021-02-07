@@ -17,6 +17,7 @@ type BookResult struct {
 	BookName         string    `json:"book_name"`
 	Identify         string    `json:"identify"`
 	OrderIndex       int       `json:"order_index"`
+	Pin              int       `json:"pin"` // pin值，用于首页固定显示
 	Description      string    `json:"description"`
 	PrivatelyOwned   int       `json:"privately_owned"`
 	PrivateToken     string    `json:"private_token"`
@@ -36,19 +37,20 @@ type BookResult struct {
 	RoleId           int       `json:"role_id"`
 	RoleName         string    `json:"role_name"`
 	Status           int
-	Vcnt             int    `json:"vcnt"`
-	Star             int    `json:"star"`
-	Score            int    `json:"score"`
-	CntComment       int    `json:"cnt_comment"`
-	CntScore         int    `json:"cnt_score"`
-	ScoreFloat       string `json:"score_float"`
-	LastModifyText   string `json:"last_modify_text"`
-	IsDisplayComment bool   `json:"is_display_comment"`
-	Author           string `json:"author"`
-	AuthorURL        string `json:"author_url"`
-	AdTitle          string `json:"ad_title"`
-	AdLink           string `json:"ad_link"`
-	Lang             string `json:"lang"`
+	Vcnt             int         `json:"vcnt"`
+	Star             int         `json:"star"`
+	Score            int         `json:"score"`
+	CntComment       int         `json:"cnt_comment"`
+	CntScore         int         `json:"cnt_score"`
+	ScoreFloat       string      `json:"score_float"`
+	LastModifyText   string      `json:"last_modify_text"`
+	IsDisplayComment bool        `json:"is_display_comment"`
+	Author           string      `json:"author"`
+	AuthorURL        string      `json:"author_url"`
+	AdTitle          string      `json:"ad_title"`
+	AdLink           string      `json:"ad_link"`
+	Lang             string      `json:"lang"`
+	Menus            []*Document `json:"menus"` //所有一级菜单列表
 }
 
 func NewBookResult() *BookResult {

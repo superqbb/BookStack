@@ -549,6 +549,7 @@ func (book *Book) ToBookResult() (m *BookResult) {
 	m.BookName = book.BookName
 	m.Identify = book.Identify
 	m.OrderIndex = book.OrderIndex
+	m.Pin = book.Pin
 	m.Description = strings.Replace(book.Description, "\r\n", "<br/>", -1)
 	m.PrivatelyOwned = book.PrivatelyOwned
 	m.PrivateToken = book.PrivateToken
@@ -582,6 +583,9 @@ func (book *Book) ToBookResult() (m *BookResult) {
 	if book.Editor == "" {
 		m.Editor = "markdown"
 	}
+
+	m.Menus, _ = new(Document).GetMenuTop(m.BookId)
+
 	return m
 }
 

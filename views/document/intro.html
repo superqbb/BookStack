@@ -56,7 +56,7 @@
                     <div class="btn btn-group">
                     {{range $index,$val:=.Menu}}
                     {{if eq $index 0}}
-                        <a href="{{urlfor "DocumentController.Read" ":key" $.Book.Identify ":id" .Identify}}" target="_blank" title="马上阅读" class="btn btn-success"><i class="fa fa-book"></i> 阅读</a>
+                        <a href="{{urlfor "DocumentController.Read" ":key" $.Book.Identify ":id" .Identify}}" target="_blank" title="马上阅读" class="btn btn-success"><i class="fa fa-book"></i>阅读</a>
                     {{end}}
                     {{end}}
                         <a href="{{urlfor "BookController.Star" ":id" .Book.BookId}}" rel="nofollow" class="btn btn-warning ajax-star">

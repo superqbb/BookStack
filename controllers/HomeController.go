@@ -61,9 +61,14 @@ func (this *HomeController) Index() {
 	//每页显示24个，为了兼容Pad、mobile、PC
 	pageSize := 24
 	books, totalCount, err := models.NewBook().HomeData(pageIndex, pageSize, models.BookOrder(tab), lang, cid)
+
 	if err != nil {
 		beego.Error(err)
 		this.Abort("404")
+	}
+	bookResults := make([]*models.BookResult,0,len(books))
+	for _,b := range books{
+		bookResults = append(bookResults,b.ToBookResult())
 	}
 	if totalCount > 0 {
 		urlSuffix := "&tab=" + tab
@@ -78,7 +83,7 @@ func (this *HomeController) Index() {
 	}
 
 	this.Data["TotalPages"] = int(math.Ceil(float64(totalCount) / float64(pageSize)))
-	this.Data["Lists"] = books
+	this.Data["Lists"] = bookResults
 	this.Data["Tab"] = tab
 	this.Data["Lang"] = lang
 	title := this.Sitename
