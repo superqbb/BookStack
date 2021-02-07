@@ -32,6 +32,11 @@ import (
 	"github.com/boombuler/barcode/qr"
 )
 
+const (
+	//保存文档自动发布
+	AUTO_RELEASE = true
+)
+
 //DocumentController struct.
 type DocumentController struct {
 	BaseController
@@ -476,7 +481,6 @@ func (this *DocumentController) Edit() {
 		}
 	}
 	this.Data["BaiDuMapKey"] = beego.AppConfig.DefaultString("baidumapkey", "")
-
 }
 
 //创建一个文档.
@@ -1112,6 +1116,16 @@ func (this *DocumentController) Content() {
 		ds.DocumentId = int(docId)
 		if err := ModelStore.InsertOrUpdate(ds, "markdown", "content"); err != nil {
 			beego.Error(err)
+		}
+	}
+
+	//保存成功后自动发布
+	if AUTO_RELEASE {
+		if exist := utils.BooksRelease.Exist(doc.BookId); !exist {
+			//当前书籍发布队列为空才执行发布
+			go func(identify string) {
+				models.NewDocument().ReleaseContent(doc.BookId, this.BaseUrl())
+			}(identify)
 		}
 	}
 

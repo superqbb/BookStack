@@ -117,6 +117,7 @@ func (m *BookResult) FindByIdentify(identify string, memberId int) (result *Book
 		member2.Find(doc.ModifyAt)
 		result.LastModifyText = member2.Account + " 于 " + doc.ModifyTime.Format("2006-01-02 15:04:05")
 	}
+	result.Menus, _ = new(Document).GetMenuTop(result.BookId)
 	return
 }
 
@@ -147,5 +148,10 @@ func (m *BookResult) FindToPager(pageIndex, pageSize int, private ...int) (books
 	sql = fmt.Sprintf(sql, condition)
 	offset := (pageIndex - 1) * pageSize
 	_, err = o.Raw(sql, offset, pageSize).QueryRows(&books)
+	if err != nil {
+		for i := range books {
+			books[i].Menus, _ = new(Document).GetMenuTop(books[i].BookId)
+		}
+	}
 	return
 }

@@ -59,7 +59,22 @@
 <div class="m-manual manual-editor">
     <div class="manual-head" id="editormd-tools">
         <div class="editormd-group">
+            {{with true}}
+            {{ $menuLength := len $.Model.Menus }}
+            {{ $HasFirstMenu := false }}
+            {{ $firstMenu := "" }}
+            {{ if gt $menuLength 0 }}
+                {{ $firstMenu = index $.Model.Menus 0 }}
+                {{ $HasFirstMenu = true }}
+            {{end}}
+
+            {{ if $HasFirstMenu }}
+            <a href="{{urlfor "DocumentController.Read" ":key" $.Model.Identify ":id" $firstMenu.Identify }}" data-toggle="tooltip" data-title="返回阅读"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+            {{else}}
             <a href="{{urlfor "BookController.Index"}}" data-toggle="tooltip" data-title="返回"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+            {{end}}
+
+            {{end}}
         </div>
         <div class="editormd-group">
             <a href="javascript:;" id="markdown-save" data-toggle="tooltip" data-title="保存内容" class="disabled save"><i class="fa fa-save" aria-hidden="true" name="save"></i></a>
